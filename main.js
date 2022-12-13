@@ -26,7 +26,7 @@ let discoveryChannel=null
 let yourMistake=false
 let underAgent=false
 let makeTheDeal=false
-
+var day100=false
 let convLevel=0
 
 
@@ -98,7 +98,7 @@ let placeOptions=[
 	{//2
 		unlocked:true,
 		texture:"router.png",
-		price:51,
+		price:101,
 		x:10+55,
 		y:50,
 		draw(){
@@ -150,7 +150,7 @@ let placeOptions=[
 	{//5
 		unlocked:true,
 		texture:"upgraderblue.png",
-		price:5000,
+		price:1000,
 		x:10,
 		y:(50+75)+75,//MY POWER GROWS
 		draw(){
@@ -167,7 +167,7 @@ let placeOptions=[
 	{//6
 		unlocked:true,
 		texture:"upgraderred.png",
-		price:1500,
+		price:2500,
 		x:10+55,
 		y:(50+75)+75,//MY POWER GROWS
 		draw(){
@@ -184,7 +184,7 @@ let placeOptions=[
 	{//7
 		unlocked:true,
 		texture:"upgraderpurple.png",
-		price:500,
+		price:6000,
 		x:(10+55)+55,
 		y:(50+75)+75,//MY POWER GROWS
 		draw(){
@@ -287,6 +287,23 @@ let placeOptions=[
    		context.fillText("$"+this.price, this.x,this.y);
 		}
 	},//12
+	{//13
+		unlocked:true,
+		texture:"wireTurnDown.png",
+		price:10,
+		x:(10+55)+(55+55),//mAy ThE lAzY rEjEcT yOu
+		y:50,
+		draw(){
+       	var c=document.getElementById("myCanvas");
+        	var ctx=c.getContext("2d");
+        	var imagee = new Image();
+        	imagee.src = this.texture
+        	ctx.drawImage(imagee,this.x,this.y)
+   		context.fillStyle = "white";
+   		context.font = "bold 18px serif";
+   		context.fillText("$"+this.price, this.x,this.y);
+		}
+	},//13
 ];
 
 
@@ -394,6 +411,20 @@ document.addEventListener('keyup',function(evt){
 			}
 			else if(sel=='wireAlt.png'){//2
 				gameInfo.placing='wire.png'	
+			}			
+			
+			
+			else if(sel=='wireTurnDown.png'){//1
+				gameInfo.placing='wireTurnUp.png'	
+			}
+			else if(sel=='wireTurnUp.png'){//2
+				gameInfo.placing='wireTurnUp1.png'	
+			}			
+			else if(sel=='wireTurnUp1.png'){//1
+				gameInfo.placing='wireTurnDown1.png'	
+			}
+			else if(sel=='wireTurnDown1.png'){//1
+				gameInfo.placing='wireTurnDown.png'	
 			}
 			
 			
@@ -1998,19 +2029,13 @@ function gameLoop(timeStamp) {
 			
 			
 			
-			if(floor[i+1] !=null && floor[i+1].texture=='wireAlt.png' && floor[(i+1)-20].texture=='wireAlt.png'){
-					floor[i+1].texture='wireTurnUp.png'
-			}
-			if(floor[i+1] !=null && floor[i+1].texture=='wireTurnUp.png' && floor[(i+1)-20].texture=='wireAlt.png'){
+			if(floor[i+1] !=null && floor[i+1].texture=='wireTurnUp.png' && floor[(i+1)-20] != null&& floor[(i+1)-20].texture=='wireAlt.png'){
 				if(targ.overlayTexture=='electric.png'){
 					floor[(i+1)-20].overlayTexture='electricAlt.png'
 					floor[i+1].overlayTexture='electricBend.png'
 				}
 			}
-			if(floor[i+1] !=null && floor[i+1].texture=='wireAlt.png' && floor[(i+1)+20].texture=='wireAlt.png'){
-					floor[i+1].texture='wireTurnDown.png'
-			}
-			if(floor[i+1] !=null && floor[i+1].texture=='wireTurnDown.png' && floor[(i+1)+20].texture=='wireAlt.png'){
+			if(floor[i+1] !=null && floor[i+1].texture=='wireTurnDown.png' && floor[(i+1)+20] != null&& floor[(i+1)+20].texture=='wireAlt.png'){
 				if(targ.overlayTexture=='electric.png'){
 					floor[(i+1)+20].overlayTexture='electricAlt.png'
 					floor[i+1].overlayTexture='electricBendDown.png'
@@ -2019,19 +2044,13 @@ function gameLoop(timeStamp) {
 			
 			
 			
-			if(floor[i-1] !=null && floor[i-1].texture=='wireAlt.png' && floor[(i-1)-20].texture=='wireAlt.png'){
-					floor[i-1].texture='wireTurnUp1.png'
-			}
-			if(floor[i-1] !=null && floor[i-1].texture=='wireTurnUp1.png' && floor[(i-1)-20].texture=='wireAlt.png'){
+			if(floor[i-1] !=null && floor[i-1].texture=='wireTurnUp1.png' && floor[(i-1)-20] != null&& floor[(i-1)-20].texture=='wireAlt.png'){
 				if(targ.overlayTexture=='electric.png'){
 					floor[(i-1)-20].overlayTexture='electricAlt.png'
 					floor[i-1].overlayTexture='electricBend1.png'
 				}
 			}
-			if(floor[i-1] !=null && floor[i-1].texture=='wireAlt.png' && floor[(i-1)+20].texture=='wireAlt.png'){
-					floor[i-1].texture='wireTurnDown1.png'
-			}
-			if(floor[i-1] !=null && floor[i-1].texture=='wireTurnDown1.png' && floor[(i-1)+20].texture=='wireAlt.png'){
+			if(floor[i-1] !=null && floor[i-1].texture=='wireTurnDown1.png' && floor[(i-1)+20] != null&& floor[(i-1)+20].texture=='wireAlt.png'){
 				if(targ.overlayTexture=='electric.png'){
 					floor[(i-1)+20].overlayTexture='electricAlt.png'
 					floor[i-1].overlayTexture='electricBendDown1.png'
@@ -2061,18 +2080,11 @@ function gameLoop(timeStamp) {
 			
 			
 			
-			
-			if(floor[i-20] !=null && floor[i-20].texture=='wire.png' && floor[(i-20)+1].texture=='wire.png'){
-					floor[i-20].texture='wireTurnDown1.png'
-			}
 			if(floor[i-20] !=null && floor[i-20].texture=='wireTurnDown1.png' && floor[(i-20)+1].texture=='wire.png'){
 				if(targ.overlayTexture=='electricAlt.png'){
 					floor[(i-20)+1].overlayTexture='electric.png'
 					floor[i-20].overlayTexture='electricBendDown1.png'
 				}
-			}
-			if(floor[i-20] !=null && floor[i-20].texture=='wire.png' && floor[(i-20)-1].texture=='wire.png'){
-					floor[i-20].texture='wireTurnDown.png'
 			}
 			if(floor[i-20] !=null && floor[i-20].texture=='wireTurnDown.png' && floor[(i-20)-1].texture=='wire.png'){
 				if(targ.overlayTexture=='electricAlt.png'){
@@ -2087,9 +2099,6 @@ function gameLoop(timeStamp) {
 			
 			
 			
-			if(floor[i+20] !=null && floor[i+20].texture=='wire.png' && floor[(i+20)+1].texture=='wire.png'){
-					floor[i+20].texture='wireTurnUp1.png'
-			}
 			if(floor[i+20] !=null && floor[i+20].texture=='wireTurnUp1.png' && floor[(i+20)+1].texture=='wire.png'){
 				if(targ.overlayTexture=='electricAlt.png'){
 					floor[(i+20)+1].overlayTexture='electric.png'
@@ -2100,9 +2109,6 @@ function gameLoop(timeStamp) {
 			
 			
 			
-			if(floor[i+20] !=null && floor[i+20].texture=='wire.png' && floor[(i+20)-1].texture=='wire.png'){
-					floor[i+20].texture='wireTurnUp.png'
-			}
 			if(floor[i+20] !=null && floor[i+20].texture=='wireTurnUp.png' && floor[(i+20)-1].texture=='wire.png'){
 				if(targ.overlayTexture=='electricAlt.png'){
 					floor[(i+20)-1].overlayTexture='electric.png'
@@ -2348,6 +2354,61 @@ function gameLoop(timeStamp) {
    		imagee.src = 'arrowDown.png'
    		ctx.drawImage(imagee,x-35,(y-35)+50);
 		}
+		
+		
+		
+		if(gameInfo.placing=='router.png'){	
+   		var c=document.getElementById("myCanvas");
+   		var ctx=c.getContext("2d");
+   		var imagee = new Image();
+   		imagee.src = 'arrowUp.png'
+   		ctx.drawImage(imagee,x-35,(y-35)+50);
+   		var imagee = new Image();
+   		imagee.src = 'arrowLeft.png'
+   		ctx.drawImage(imagee,(x-35)-50,y-35);
+   		var imagee = new Image();
+   		imagee.src = 'arrowRight.png'
+   		ctx.drawImage(imagee,(x-35)+50,y-35);
+		}		
+		if(gameInfo.placing=='routerUp.png'){	
+   		var c=document.getElementById("myCanvas");
+   		var ctx=c.getContext("2d");
+   		var imagee = new Image();
+   		imagee.src = 'arrowDown.png'
+   		ctx.drawImage(imagee,x-35,(y-35)-50);
+   		var imagee = new Image();
+   		imagee.src = 'arrowLeft.png'
+   		ctx.drawImage(imagee,(x-35)-50,y-35);
+   		var imagee = new Image();
+   		imagee.src = 'arrowRight.png'
+   		ctx.drawImage(imagee,(x-35)+50,y-35);
+		}
+		if(gameInfo.placing=='routerLeft.png'){	
+   		var c=document.getElementById("myCanvas");
+   		var ctx=c.getContext("2d");
+   		var imagee = new Image();
+   		imagee.src = 'arrowDown.png'
+   		ctx.drawImage(imagee,x-35,(y-35)+50);
+   		var imagee = new Image();
+   		imagee.src = 'arrowUp.png'
+   		ctx.drawImage(imagee,x-35,(y-35)-50);
+   		var imagee = new Image();
+   		imagee.src = 'arrowRight.png'
+   		ctx.drawImage(imagee,(x-35)-50,y-35);
+		}
+		if(gameInfo.placing=='routerRight.png'){	
+   		var c=document.getElementById("myCanvas");
+   		var ctx=c.getContext("2d");
+   		var imagee = new Image();
+   		imagee.src = 'arrowDown.png'
+   		ctx.drawImage(imagee,x-35,(y-35)+50);
+   		var imagee = new Image();
+   		imagee.src = 'arrowUp.png'
+   		ctx.drawImage(imagee,x-35,(y-35)-50);
+   		var imagee = new Image();
+   		imagee.src = 'arrowLeft.png'
+   		ctx.drawImage(imagee,(x-35)+50,y-35);
+		}
 	}
 	if(!explainDEA){
 		dayTicks++
@@ -2356,6 +2417,12 @@ function gameLoop(timeStamp) {
 		gameInfo.currentDay++
 		dayTicks=0
 		gameInfo.hadEncounter=false
+	}
+	if(gameInfo.currentDay==100){
+		day100=true
+		gameInfo.currentDay++
+		gameInfo.money-=1000000000	
+		
 	}
 	if(dayTicks<1000){
 		if(gameInfo.personEvent>0 && !gameInfo.hadEncounter){
@@ -2368,6 +2435,57 @@ function gameLoop(timeStamp) {
 		}	
 		
 	}
+	if(day100){
+			let startX=canvas.width/2	
+			let startY=canvas.height
+			var c=document.getElementById("myCanvas");
+			var ctx=c.getContext("2d");
+			var imagee = new Image();
+			imagee.src = 'textbox.png'
+			ctx.drawImage(imagee,startX-400,startY-200);
+			var c=document.getElementById("myCanvas");
+			var ctx=c.getContext("2d");
+			var imagee = new Image();
+			imagee.src = 'strangeman.png'
+			ctx.drawImage(imagee,(canvas.width)-300,canvas.height-300);
+			if(!sawOne){
+				infoText='It is time for that $1000000000 you owe me.'
+				let startX=canvas.width/2
+				let startY=canvas.height-100
+				var imageee = new Image();
+				imageee.src = 'yesButton.png'
+				ctx.drawImage(imageee,startX,startY);
+				let setX=startX
+				let setY=startY+20
+				let setX1=setX+110
+				let setY1=setY+70
+
+				box_area.x1=setX
+				box_area.y1=setY
+				box_area.x2=setX1
+				box_area.y2=setY1
+				if(is_mouse_in_area()){
+					var C = coords;
+					C[0] = 0; 
+					C[1] = 0; 
+					day100=false
+					infoText=""
+				}
+
+			}
+		}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	if(explainDEA){	
 		/*if(!makeTheDeal || !underAgent || !sawTwo || !yourMistake){
 				sawOne=true
